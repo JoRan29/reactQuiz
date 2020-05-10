@@ -1,17 +1,36 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import "./assets/style.css";
+import quizService from "./quizService";
+import QuestionBox from "./components/questionBox";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+class Quiz extends Component {
+  state = {
+    questionBank: [],
+  };
+  getQuestions = () => {
+    quizService().then((q) => {
+      this.setState({
+        questionBank: q,
+      });
+    });
+  };
+  componentDidMount() {
+    this.getQuestions();
+  }
+  render() {
+    return (
+      <div className="container">
+        <div className="title">Quiz</div>
+        {this.state.questionBank.length > 0 &&
+          this.state.questionBank.map(
+            ({ question, answers, correct, questionID }) => <h4>{question}</h4>
+          )}
+      </div>
+    );
+  }
+}
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+export default Quiz;
+
+ReactDOM.render(<Quiz />, document.getElementById("root"));
