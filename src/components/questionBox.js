@@ -6,7 +6,13 @@ let QuestionBox = ({ question, options }) => {
     <div className="questionBox">
       <div className="question">{question}</div>
       {answer.map((text, i) => (
-        <button key={i} className="answerBtn">
+        <button
+          onClick={() => {
+            setAnswer([text]);
+          }}
+          key={i}
+          className="answerBtn"
+        >
           {text}
         </button>
       ))}
