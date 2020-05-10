@@ -24,7 +24,13 @@ class Quiz extends Component {
         <div className="title">Quiz</div>
         {this.state.questionBank.length > 0 &&
           this.state.questionBank.map(
-            ({ question, answers, correct, questionID }) => <h4>{question}</h4>
+            ({ question, answers, correct, questionID }) => (
+              <QuestionBox
+                key={questionID}
+                question={question}
+                options={answers}
+              />
+            )
           )}
       </div>
     );
