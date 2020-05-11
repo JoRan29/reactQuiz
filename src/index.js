@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./assets/style.css";
 import quizService from "./quizService";
 import QuestionBox from "./components/questionBox";
+import Result from "./components/result";
 
 class Quiz extends Component {
   state = {
