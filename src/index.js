@@ -5,6 +5,8 @@ import quizService from "./quizService";
 import QuestionBox from "./components/questionBox";
 import Result from "./components/result";
 
+// TODO - Fix a result bug
+
 class Quiz extends Component {
   state = {
     questionBank: [],
@@ -12,9 +14,9 @@ class Quiz extends Component {
     responses: 0,
   };
   getQuestions = () => {
-    quizService().then((q) => {
+    quizService().then((question) => {
       this.setState({
-        questionBank: q,
+        questionBank: question,
       });
     });
   };
@@ -28,6 +30,15 @@ class Quiz extends Component {
       responses: this.state.responses < 5 ? this.state.responses + 1 : 5,
     });
   };
+
+  playAgain = () => {
+    this.getQuestions();
+    this.setState({
+      score: 0,
+      responses: 0,
+    });
+  };
+
   componentDidMount() {
     this.getQuestions();
   }
@@ -48,7 +59,9 @@ class Quiz extends Component {
             )
           )}
 
-        {this.state.responses === 5 ? <h2>{this.state.score}</h2> : null}
+        {this.state.responses === 5 ? (
+          <Result playAgain={this.playAgain} score={this.state.score} />
+        ) : null}
       </div>
     );
   }
